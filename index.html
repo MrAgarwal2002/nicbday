@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy 21st Birthday Nicole!</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Dancing+Script:wght@600&family=Cormorant+Garamond:wght@500&family=Montserrat:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        color: #333;
+        background: linear-gradient(135deg, #dbacfc 0%, #b57edc 100%);
+        min-height: 100vh;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", serif;
+        color: #653b73;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .dancing-script {
+        font-family: "Dancing Script", cursive;
+      }
+
+      .cormorant {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        line-height: 1.8;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .btn {
+        display: inline-block;
+        background: #653b73;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin: 0.5rem;
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        background: #b57edc;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Navigation */
+      .nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #653b73;
+        display: flex;
+        justify-content: space-around;
+        padding: 0.5rem;
+        z-index: 100;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-item {
+        text-align: center;
+        padding: 0.5rem;
+        color: white;
+        text-decoration: none;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+      }
+
+      .nav-item.active {
+        color: #fff892;
+      }
+
+      .nav-icon {
+        font-size: 1.2rem;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      /* Pages */
+      .page {
+        display: none;
+        min-height: 100vh;
+        padding: 2rem 1rem;
+        padding-bottom: 70px;
+      }
+
+      .page.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Home Page */
+      .home-page {
+        background: linear-gradient(
+          135deg,
+          #dbacfc 0%,
+          #b57edc 50%,
+          #653b73 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .birthday-card {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2rem;
+        border-radius: 20px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Poems Page */
+      .poems-page {
+        background: #dbacfc;
+      }
+
+      .poem-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin: 0 auto 2rem;
+        max-width: 600px;
+        text-align: center;
+      }
+
+      /* Music Page */
+      .music-page {
+        background: #dbacfc;
+        text-align: center;
+      }
+
+      .music-player {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin: 0 auto 2rem;
+        max-width: 500px;
+      }
+
+      .spotify-container {
+        width: 100%;
+        margin: 1.5rem 0;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      /* Greetings Page */
+      .greetings-page {
+        background: #dbacfc;
+        text-align: center;
+      }
+
+      .greeting-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin: 0 auto 2rem;
+        max-width: 600px;
+      }
+
+      /* Confetti */
+      .confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        display: none;
+      }
+
+      .confetti-piece {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        animation: fall linear infinite;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100vh) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* QR Code */
+      .qr-code {
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(45deg, #653b73, #b57edc);
+        border-radius: 10px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .qr-code:hover {
+        transform: scale(1.1);
+      }
+
+      .qr-code::before,
+      .qr-code::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #dbacfc;
+      }
+
+      .qr-code::before {
+        top: 15px;
+        left: 15px;
+      }
+
+      .qr-code::after {
+        bottom: 15px;
+        right: 15px;
+      }
+
+      /* New Poem Button */
+      .new-poem-btn {
+        background: #fff892;
+        color: #653b73;
+        margin-top: 1rem;
+      }
+
+      /* Surprise Popup */
+      .surprise-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+
+      .surprise-popup h3 {
+        color: #653b73;
+        margin-bottom: 1rem;
+      }
+
+      .surprise-popup p {
+        margin-bottom: 1.5rem;
+      }
+
+      .surprise-popup .close-btn {
+        background: #653b73;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      /* Cat paw cursor for QR code */
+      .qr-code {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><path d='M20 5 Q25 0 30 5 Q35 10 30 15 Q25 20 20 15 Q15 20 10 15 Q5 10 10 5 Q15 0 20 5 Z' fill='%23653B73'/><circle cx='15' cy='10' r='2' fill='white'/><circle cx='20' cy='10' r='2' fill='white'/><circle cx='25' cy='10' r='2' fill='white'/></svg>")
+            20 20,
+          auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Confetti Animation -->
+    <div class="confetti" id="confetti"></div>
+
+    <!-- Overlay for popup -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Surprise Popup -->
+    <div class="surprise-popup" id="surprisePopup">
+      <h3>🎉 Surprise! 🎉</h3>
+      <p>
+        Happy 21st Birthday, Nicole! This special website was created just for
+        you to celebrate your amazing day. You're loved more than words can
+        express! 🥳💖
+      </p>
+      <button class="close-btn" onclick="closeSurprise()">Close</button>
+    </div>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+      <div class="home-page">
+        <div class="birthday-card">
+          <h1>Happy 21st Birthday Nicole! 🎂✨</h1>
+          <p>
+            Welcome to your special day! We've prepared something special just
+            for you.
+          </p>
+          <div style="margin-top: 1.5rem">
+            <a href="#" class="btn" onclick="showPage('poems')">Read Poems</a>
+            <a href="#" class="btn" onclick="showPage('music')"
+              >Listen to Music</a
+            >
+            <a href="#" class="btn" onclick="showPage('greetings')"
+              >Special Greetings</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Poems Page -->
+    <section id="poems" class="page">
+      <div class="poems-page">
+        <div class="container">
+          <h2 class="dancing-script">For You on Your Day 🤍</h2>
+          <div id="poem-container">
+            <!-- Poem will be inserted here by JavaScript -->
+          </div>
+          <div style="text-align: center">
+            <button class="btn new-poem-btn" onclick="showRandomPoem()">
+              Another Poem 🔄
+            </button>
+            <a href="#" class="btn" onclick="showPage('home')">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Music Page -->
+    <section id="music" class="page">
+      <div class="music-page">
+        <div class="container">
+          <h2>Nicole's Birthday Playlist 🎵</h2>
+          <div class="music-player">
+            <p>Enjoy these special songs for your birthday!</p>
+
+            <h3>Song 1: Birthday Vibes</h3>
+            <div class="spotify-container">
+              <iframe
+                style="border-radius: 12px"
+                src="https://open.spotify.com/embed/track/5hff5RQeE84pznOt8WEWeO?utm_source=generator&theme=0"
+                width="100%"
+                height="152"
+                frameborder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              ></iframe>
+            </div>
+
+            <h3>Song 2: Celebration Tunes</h3>
+            <div class="spotify-container">
+              <iframe
+                style="border-radius: 12px"
+                src="https://open.spotify.com/embed/track/47N81NMkB488fuOwOC3Oip?utm_source=generator&theme=0"
+                width="100%"
+                height="152"
+                frameborder="0"
+                allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+          <div style="text-align: center">
+            <a href="#" class="btn" onclick="showPage('home')">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Greetings Page -->
+    <section id="greetings" class="page">
+      <div class="greetings-page">
+        <div class="container">
+          <h2>Special Greetings 💌</h2>
+          <div class="greeting-card">
+            <p>Happy 21st Birthday Nicole! 🎂🥳</p>
+            <p>
+              May this year bring you closer to who you're meant to become, not
+              what others expect you to be.
+            </p>
+            <p>
+              Wishing you growth, clarity, peace, and of course plenty of quiet
+              blessings along the way 🌙✨
+            </p>
+          </div>
+
+          <div class="greeting-card">
+            <h3>A Special Surprise</h3>
+            <div class="qr-code" onclick="showSurprise()"></div>
+            <p style="color: #fff892; margin-top: 1rem; font-style: italic">
+              psst… click me 🐾
+            </p>
+          </div>
+
+          <div style="text-align: center">
+            <a href="#" class="btn" onclick="showPage('home')">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <a href="#" class="nav-item active" onclick="showPage('home')">
+        <span class="nav-icon">🏠</span>
+        Home
+      </a>
+      <a href="#" class="nav-item" onclick="showPage('poems')">
+        <span class="nav-icon">📜</span>
+        Poems
+      </a>
+      <a href="#" class="nav-item" onclick="showPage('music')">
+        <span class="nav-icon">🎵</span>
+        Music
+      </a>
+      <a href="#" class="nav-item" onclick="showPage('greetings')">
+        <span class="nav-icon">💌</span>
+        Greetings
+      </a>
+    </nav>
+
+    <script>
+      // Poems data - all 6 poems
+      const poems = [
+        {
+          title: "Gentle Giant",
+          content: `Gentle giant with a steady gaze,<br>
+                loyal heart through storm and haze.<br><br>
+                
+                Soft as mountains, strong as stone,<br>
+                a Bernese walks, and I'm not alone.<br><br>
+                
+                In fur and warmth, the world feels right,<br>
+                a friend of shadows, a flame in night.`,
+        },
+        {
+          title: "Whisper in the Shadows",
+          content: `A whisper moves, a shadow slips,<br>
+                moonlight lingers where silence sits.<br><br>
+                
+                Grace in steps, the quiet art,<br>
+                a spirit cat with a tender heart.<br><br>
+                
+                Eyes that see what words can't show,<br>
+                carrying secrets only she can know.`,
+        },
+        {
+          title: "Colors of You",
+          content: `Dark red burns with passion's flame,<br>
+                silver hums a timeless name.<br><br>
+                
+                Olive green, a gentle sigh,<br>
+                dark blue deep as a midnight sky.<br><br>
+                
+                Lavender purple—soft and true,<br>
+                all these shades remind me of you.`,
+        },
+        {
+          title: "Bloom Into You",
+          content: `Not who the world demands you be,<br>
+                but blooming into your own decree.<br><br>
+                
+                A flower bends, but never breaks,<br>
+                its petals hold the love it makes.<br><br>
+                
+                In every dawn, a chance anew,<br>
+                to grow, to shine, to just be you.`,
+        },
+        {
+          title: "Celestial Glow",
+          content: `The universe hums in quiet tune,<br>
+                painting her light beneath the moon.<br><br>
+                
+                Constellations bow, the skies align,<br>
+                to frame her heart in a design.<br><br>
+                
+                No star compares, no comet near,<br>
+                to the glow she carries year by year.`,
+        },
+        {
+          title: "You Are",
+          content: `You are laughter, soft and rare,<br>
+                the kind of peace beyond compare.<br><br>
+                
+                You are morning, gentle, bright,<br>
+                you are evening's calm twilight.<br><br>
+                
+                No gift could match, no verse undo,<br>
+                the beauty I see when I think of you.`,
+        },
+      ];
+
+      // Page navigation
+      function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.remove("active");
+        });
+
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
+
+        // Update navigation
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        // Activate current nav item
+        document.querySelectorAll(".nav-item").forEach((item) => {
+          if (
+            item.textContent.includes(
+              pageId === "home"
+                ? "Home"
+                : pageId === "poems"
+                ? "Poems"
+                : pageId === "music"
+                ? "Music"
+                : "Greetings"
+            )
+          ) {
+            item.classList.add("active");
+          }
+        });
+
+        // Special actions for specific pages
+        if (pageId === "home") {
+          triggerConfetti();
+        } else if (pageId === "poems") {
+          showRandomPoem();
+        }
+      }
+
+      // Show a random poem
+      function showRandomPoem() {
+        const randomIndex = Math.floor(Math.random() * poems.length);
+        const poem = poems[randomIndex];
+
+        const poemContainer = document.getElementById("poem-container");
+        poemContainer.innerHTML = `
+                <div class="poem-card cormorant">
+                    <h3>${poem.title}</h3>
+                    <p>${poem.content}</p>
+                </div>
+            `;
+      }
+
+      // Confetti animation
+      function triggerConfetti() {
+        const confettiContainer = document.getElementById("confetti");
+        confettiContainer.innerHTML = "";
+        confettiContainer.style.display = "block";
+
+        // Create confetti pieces
+        const colors = ["#653B73", "#B57EDC", "#DBACFC", "#FFF892"];
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti-piece";
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDuration = Math.random() * 5 + 3 + "s";
+          confetti.style.animationDelay = Math.random() * 2 + "s";
+          confettiContainer.appendChild(confetti);
+        }
+
+        // Hide confetti after animation
+        setTimeout(() => {
+          confettiContainer.style.display = "none";
+        }, 5000);
+      }
+
+      // Surprise functions
+      function showSurprise() {
+        document.getElementById("surprisePopup").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+        triggerConfetti();
+      }
+
+      function closeSurprise() {
+        document.getElementById("surprisePopup").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+
+      // Close popup if clicked outside
+      document
+        .getElementById("overlay")
+        .addEventListener("click", closeSurprise);
+
+      // Initial confetti on load
+      window.onload = function () {
+        triggerConfetti();
+        showRandomPoem();
+      };
+    </script>
+  </body>
+</html>
